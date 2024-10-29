@@ -1,3 +1,4 @@
+![Logo](logo.svg)
 # AB Carousel
 
 `ab-carousel` is a highly customizable and lightweight JavaScript slider module.
