@@ -6,6 +6,8 @@ export default defineConfig({
     },
     build: {
         outDir: 'dist',
+        minify: true,
+        cssMinify: true,
         rollupOptions: {
             input: {
                 main: './src/core/abs-slider.js'
@@ -13,8 +15,8 @@ export default defineConfig({
             output: {
                 dir: 'dist',
                 format: 'es',
-                entryFileNames: '[name]-[hash].js',
-                assetFileNames: '[name]-[hash].[ext]'
+                entryFileNames: '[name].js',
+                assetFileNames: '[name].[ext]'
             }
         },
         lib: {
