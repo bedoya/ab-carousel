@@ -1,0 +1,42 @@
+{
+    "description": "Andrés Bedoya simple slider",
+    "keywords": [
+        "slider",
+        "abs-slider",
+        "fade",
+        "slide",
+        "ken-burns",
+        "carousel",
+        "annimation",
+        "javascript",
+        "npm"
+    ],
+    "author": "Andrés Bedoya",
+    "version": "0.0.3",
+    "name": "abs-slider",
+    "main": "src/core/abs-slider.js",
+    "style": "./src/css/abs-slider.css",
+    "scripts": {
+        "test": "vitest",
+        "dev": "vite",
+        "build": "vite build",
+        "lint": "eslint .",
+        "start": "webpack serve --open",
+        "prepare": "npm run lint && npm run test"
+    },
+    "files": [
+        "examples",
+        "src",
+        "dist"
+    ],
+    "license": "MIT",
+    "type": "module",
+    "devDependencies": {
+        "@eslint/js": "^9.13.0",
+        "eslint": "^9.13.0",
+        "globals": "^15.11.0",
+        "jsdom": "^25.0.1",
+        "vite": "^5.4.10",
+        "vitest": "^2.1.4"
+    }
+}

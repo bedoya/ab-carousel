@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalabs-le=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="Author" content="Andrés Bedoya"/>
+        <title>ABSSlider - Ken Burns effect example</title>
+        <link rel="stylesheet" href="./styles/example-styles.css">
+    </head>
+    <body>
+        <div class="col">
+            <div>
+                <h3>Slide effect</h3>
+                <div class="abs-slider" data-transition="ABSSlide" data-slide_speed="9000">
+                    <div class="abs-slider-container">
+                        <div class="abs-slider-slide">
+                            <span>Slide without an image</span>
+                        </div>
+                        <div class="abs-slider-slide">
+                            <img alt="Example picture"
+                                 src="https://picsum.photos/id/1084/450/300?grayscale"
+                                 style="width: 640px; height: 360px;"
+                                 class="abs-slider-slide-image"
+                                 data-zoom_start="1"
+                                 data-zoom_final="1.25"
+                                 data-pan_amount="10%"
+                                 data-pan_direction="45"
+                                 data-effect="ABSKenBurns"
+                            />
+                            <span>This slide's image has a Ken Burns effect</span>
+                        </div>
+                        <div class="abs-slider-slide">
+                            <img alt="Another example picture" src="https://picsum.photos/id/1083/450/300?grayscale" style="width: 640px; height: 360px;" />
+                            <span style="color: rgba(255, 255, 255, 1);">This slide's image doesn't have an effect applied</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                <h3>Fade effect</h3>
+                <div class="abs-slider" data-transition="ABSFade" data-slide_speed="6000">
+                    <div class="abs-slider-container" style="height: 100%;">
+                        <div class="abs-slider-slide"
+                             style="background-color: rgba(30, 41, 59, 1); color: rgba(255, 255, 255, 1); width: 100%; height: 360px;">
+                            <span>Slide without an image</span>
+                        </div>
+                        <div class="abs-slider-slide">
+                            <img alt="Example picture"
+                                 src="https://picsum.photos/id/235/450/300"
+                                 style="width: 640px; height: 360px;"
+                                 class="abs-slider-slide-image"
+                                 data-zoom_start="1"
+                                 data-zoom_final="1.25"
+                                 data-pan_amount="10%"
+                                 data-pan_direction="45"
+                                 data-effect="ABSKenBurns"
+                            />
+                            <span>This slide's image has a Ken Burns effect</span>
+                        </div>
+                        <div class="abs-slider-slide">
+                            <img alt="Another example picture" src="https://picsum.photos/id/236/450/300" style="width: 640px; height: 360px;" />
+                            <span>This slide's image doesn't have an effect applied</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="module">
+            import ABSSlider from "../src/core/abs-slider.js";
+
+            let slider = new abs-Slider('.abs-slider');
+            slider.init();
+        </script>
+    </body>
+</html>

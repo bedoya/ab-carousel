@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="Author" content="Andrés Bedoya"/>
+        <title>ABSSlider - Basic example</title>
+        <link rel="stylesheet" href="./styles/example-styles.css">
+    </head>
+    <body>
+        <div class="col">
+            <div>
+                <h3>A basic example with slide transition</h3>
+                <div class="abs-slider">
+                    <div class="abs-slider-container">
+                        <div class="abs-slider-slide">
+                            <span>A slide without an image</span>
+                        </div>
+                        <div class="abs-slider-slide">
+                            <img alt="Example picture" src="https://picsum.photos/id/1084/450/300?grayscale" style="width: 640px; height: 360px;" />
+                            <span>A slide with a picture</span>
+                        </div>
+                        <div class="abs-slider-slide">
+                            <img alt="Another example picture" src="https://picsum.photos/id/1083/450/300?grayscale" style="width: 640px; height: 360px;" />
+                            <span style="color: rgba(255, 255, 255, 1);">Another slide with a picture</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="module">
+            import ABSSlider from "../src/core/abs-slider.js";
+
+            let slider = new ABSSlider('.abs-slider', {slide_speed: 7000, transition: 'ABSSlide'});
+            slider.init();
+        </script>
+    </body>
+</html>
+
