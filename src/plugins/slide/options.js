@@ -1,7 +1,7 @@
 /**
  * @function defaultOptions
  * Set options that can be overridden
- * when creating the ABSlider instance.
+ * when creating the ABSSlider instance.
  */
 const defaultOptions = () => {
     return {

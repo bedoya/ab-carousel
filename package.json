@@ -12,7 +12,7 @@
         "npm"
     ],
     "author": "Andrés Bedoya",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "name": "abs-slider",
     "main": "src/core/abs-slider.js",
     "style": "./src/css/abs-slider.css",

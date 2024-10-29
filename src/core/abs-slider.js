@@ -115,7 +115,7 @@ function ABSSlider(container, options = {}, plugins = []) {
      * @param transition_name
      * @param assigned_options
      */
-    function animateSlider(slides, transition_name = 'ABSlide', assigned_options = {}) {
+    function animateSlider(slides, transition_name = 'ABSSlide', assigned_options = {}) {
         let slide_index = 0;
         const transition_plugin = plugin_map.transitions[transition_name];
 

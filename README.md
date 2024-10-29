@@ -51,7 +51,7 @@ import ABSSlider from 'abs-slider';
 // Initialize the slider
 const slider = new ABSSlider('.abs-slider', {
     slide_class: 'abs-slider-slide', // class for individual slides
-    transition: 'ABSFade',           // Default transition (ABSFade or ABSlide)
+    transition: 'ABSFade',           // Default transition (ABSFade or ABSSlide)
     is_active: true,                 // Auto-slide
     slide_speed: 5000
 });
