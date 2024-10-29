@@ -86,30 +86,5 @@ You can apply the Ken Burns effect to your slide images by adding custom data at
 ### Customizing Transitions & Effects
 You can add additional plugins by creating your own custom transitions or effects. Simply follow the structure used in the built-in plugins like `ab-carousel-fade`, `ab-carousel-slide`, or `ab-carousel-kenburns`.
 
-## Running Examples
-
-To run the examples for the `ab-carousel`, follow these steps:
-
-1. **Ensure you have Vite installed**. If you haven't installed it globally, you can do so using npm:
-```bash
-npm install -g vite
-```
-2. Navigate to the root directory of the ab-carousel your project:
-```bash
-cd resources/ab-carousel
-```
-3. Run the development server:
-```bash
-npm run dev
-```
-4. Open your browser and navigate to the following URL to view the examples:
-```bash
-http://localhost:5173/examples/basic-slider.html
-http://localhost:5173/examples/kenburns-slider.html
-http://localhost:5173/examples/multiple-sliders.html
-```
-- You should see the various examples demonstrating the functionality of the ab-carousel, including slide transitions, fade transitions, Ken Burns effects, and multiple slides on one page.
-- Feel free to adjust any wording or add more details based on your preferences!
-
 ## License
 MIT
