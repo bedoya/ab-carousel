@@ -10,7 +10,7 @@ export default defineConfig({
         cssMinify: true,
         rollupOptions: {
             input: {
-                main: './src/core/abs-slider.js'
+                main: './src/core/ab-carousel.js'
             },
             output: {
                 dir: 'dist',
@@ -20,15 +20,15 @@ export default defineConfig({
             }
         },
         lib: {
-            entry: './src/core/abs-slider.js',
-            name: 'ABSSlider',
-            fileName: 'abs-slider'
+            entry: './src/core/ab-carousel.js',
+            name: 'ABCarousel',
+            fileName: 'ab-carousel'
         },
     },
     css: {
         preprocessorOptions: {
             css: {
-                additionalData: '@import "./src/core/styles/abs-slider.css";'
+                additionalData: '@import "./src/core/styles/ab-carousel.css";'
             }
         }
     }

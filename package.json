@@ -2,7 +2,7 @@
     "description": "Andrés Bedoya simple slider",
     "keywords": [
         "slider",
-        "abs-slider",
+        "ab-carousel",
         "fade",
         "slide",
         "ken-burns",
@@ -12,10 +12,10 @@
         "npm"
     ],
     "author": "Andrés Bedoya",
-    "version": "0.0.4",
-    "name": "abs-slider",
-    "main": "src/core/abs-slider.js",
-    "style": "./src/css/abs-slider.css",
+    "version": "0.0.5",
+    "name": "ab-carousel",
+    "main": "src/core/ab-carousel.js",
+    "style": "./src/css/ab-carousel.css",
     "scripts": {
         "test": "vitest",
         "dev": "vite",

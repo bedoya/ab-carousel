@@ -27,18 +27,18 @@ h3 {
     margin-bottom: 20px;
     display: block;
 }
-.abs-slider {
+.ab-carousel {
     margin: auto;
     width: 640px;
     height: 360px;
     background-color: rgba(208, 236, 35, 1);
 }
-.abs-slider-slide {
+.ab-carousel-slide {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.abs-slider-slide > span {
+.ab-carousel-slide > span {
     display: inline;
     text-align: center;
     margin: 20px;

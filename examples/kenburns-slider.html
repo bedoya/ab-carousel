@@ -6,32 +6,32 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="Author" content="Andrés Bedoya"/>
-        <title>ABSSlider - Ken Burns effect example</title>
+        <title>ABCarousel - Ken Burns effect example</title>
         <link rel="stylesheet" href="./styles/example-styles.css">
     </head>
     <body>
         <div class="col">
             <div>
                 <h3>The Ken Burns effect with fade transition</h3>
-                <div class="abs-slider">
-                    <div class="abs-slider-container">
-                        <div class="abs-slider-slide">
+                <div class="ab-carousel">
+                    <div class="ab-carousel-container">
+                        <div class="ab-carousel-slide">
                             <span>A slide without an image</span>
                         </div>
-                        <div class="abs-slider-slide">
+                        <div class="ab-carousel-slide">
                             <img alt="Example picture"
                                  src="https://picsum.photos/id/1084/450/300?grayscale"
                                  style="width: 640px; height: 360px;"
-                                 class="abs-slider-slide-image"
+                                 class="ab-carousel-slide-image"
                                  data-zoom_start="1"
                                  data-zoom_final="1.25"
                                  data-pan_amount="10%"
                                  data-pan_direction="45"
-                                 data-effect="ABSKenBurns"
+                                 data-effect="ABKenBurns"
                             />
                             <span>This slide's image has a Ken Burns effect</span>
                         </div>
-                        <div class="abs-slider-slide">
+                        <div class="ab-carousel-slide">
                             <img alt="Another example picture" src="https://picsum.photos/id/1083/450/300?grayscale" style="width: 640px; height: 360px;" />
                             <span style="color: rgba(255, 255, 255, 1);">This slide's image doesn't have an effect applied</span>
                         </div>
@@ -40,9 +40,9 @@
             </div>
         </div>
         <script type="module">
-            import ABSSlider from "../src/core/abs-slider.js";
+            import ABCarousel from "../src/core/ab-carousel.js";
 
-            let slider = new ABSSlider('.abs-slider', {slide_speed: 7000, transition: 'ABSFade'});
+            let slider = new ABCarousel('.ab-carousel', {slide_speed: 7000, transition: 'ABFade'});
             slider.init();
         </script>
     </body>

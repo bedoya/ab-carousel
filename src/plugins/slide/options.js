@@ -1,15 +1,15 @@
 /**
- * @function defaultOptions
+ * @function default_options
  * Set options that can be overridden
- * when creating the ABSSlider instance.
+ * when creating the ABCarousel instance.
  */
-const defaultOptions = () => {
+const default_options = () => {
     return {
         'transition_speed': 1500,
         'transition_direction': true,
-        'slide_class': 'abs-slider-slide',
+        'slide_class': 'ab-carousel-slide',
     };
 };
 
-export default defaultOptions;
+export default default_options;
 

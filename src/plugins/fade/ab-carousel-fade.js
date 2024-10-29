@@ -1,7 +1,7 @@
 import {showElement, hideElement} from '../../utils/helpers.js';
-import defaultOptions from './options.js';
+import default_options from './options.js';
 
-function ABSFade(options = {}) {
+function ABFade(options = {}) {
     let fadeOptions;
 
     function transitionSlides(current_slide, next_slide) {
@@ -38,15 +38,15 @@ function ABSFade(options = {}) {
     }
 
     return {
-        name: 'ABSFade',
+        name: 'ABFade',
         type: 'transition',
         init(current_slide, next_slide) {
-            fadeOptions = Object.assign({...defaultOptions()}, options);
+            fadeOptions = Object.assign({...default_options()}, options);
             transitionSlides(current_slide, next_slide);
         }
     };
 }
 
-ABSFade.globalOptions = undefined;
+ABFade.globalOptions = undefined;
 
-export {ABSFade as default};
+export {ABFade as default};

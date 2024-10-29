@@ -1,11 +1,11 @@
 import {showElement, hideElement} from '../../utils/helpers.js';
-import defaultOptions from './options.js';
+import default_options from './options.js';
 
-function ABSSlide(options = {}) {
+function ABSlide(options = {}) {
     let slide_options;
 
     function transitionSlides(current_slide, next_slide) {
-        slide_options = Object.assign({...defaultOptions()}, options);
+        slide_options = Object.assign({...default_options()}, options);
         const slider_container = current_slide.parentElement;
         const slider_width = slider_container.offsetWidth;
         const transition_speed = parseFloat(slide_options.transition_speed);
@@ -44,15 +44,15 @@ function ABSSlide(options = {}) {
     }
 
     return {
-        name: 'ABSSlide',
+        name: 'ABSlide',
         type: 'transition',
         init(current_slide, next_slide) {
-            slide_options = Object.assign({...defaultOptions()}, options);
+            slide_options = Object.assign({...default_options()}, options);
             transitionSlides(current_slide, next_slide);
         }
     };
 }
 
-ABSSlide.globalOptions = undefined;
+ABSlide.globalOptions = undefined;
 
-export {ABSSlide as default};
+export {ABSlide as default};

@@ -1,18 +1,18 @@
 /**
- * @function defaultOptions
+ * @function default_options
  * Set options that can be overridden
- * when creating the ABSSlider instance.
+ * when creating the ABCarousel instance.
  */
-const defaultOptions = () => {
+const default_options = () => {
     return {
         slide_speed: 9000,
         is_active: true,
         direction: true,
-        transition: 'ABSFade',
-        container_class: 'abs-slider',
-        slide_class: 'abs-slider-slide',
-        slide_image_class: 'abs-slider-slide-image',
+        transition: 'ABFade',
+        container_class: 'ab-carousel',
+        slide_class: 'ab-carousel-slide',
+        slide_image_class: 'ab-carousel-slide-image',
     };
 };
 
-export default defaultOptions;
+export default default_options;

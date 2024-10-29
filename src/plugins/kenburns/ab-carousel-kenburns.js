@@ -1,6 +1,6 @@
-import defaultOptions from './options.js';
+import default_options from './options.js';
 
-function ABSKenBurns() {
+function ABKenBurns() {
     let kenBurnsOptions;
 
     /**
@@ -71,10 +71,10 @@ function ABSKenBurns() {
     }
 
     return {
-        name: 'ABSKenBurns',
+        name: 'ABKenBurns',
         type: 'effect',
         init(image) {
-            kenBurnsOptions = Object.assign({...defaultOptions()}, image.dataset);
+            kenBurnsOptions = Object.assign({...default_options()}, image.dataset);
             applyEffect(image);
         },
         applyEffect: applyEffect,
@@ -82,6 +82,6 @@ function ABSKenBurns() {
     };
 }
 
-ABSKenBurns.globalOptions = undefined;
+ABKenBurns.globalOptions = undefined;
 
-export {ABSKenBurns as default};
+export {ABKenBurns as default};

@@ -1,10 +1,10 @@
 import {hideAll, showElement, hideElement} from '../utils/helpers.js';
-import defaultOptions from './options.js';
-import './styles/abs-slider.css';
+import default_options from './options.js';
+import './styles/ab-carousel.css';
 
-import ABSFade from '../plugins/fade/abs-slider-fade.js';
-import ABSSlide from '../plugins/slide/abs-slider-slide.js';
-import ABSKenBurns from '../plugins/kenburns/abs-slider-kenburns.js';
+import ABFade from '../plugins/fade/ab-carousel-fade.js';
+import ABSlide from '../plugins/slide/ab-carousel-slide.js';
+import ABKenBurns from '../plugins/kenburns/ab-carousel-kenburns.js';
 
 /**
  *
@@ -15,7 +15,7 @@ import ABSKenBurns from '../plugins/kenburns/abs-slider-kenburns.js';
  * @returns {{init(): void, name: string, options}}
  * @constructor
  */
-function ABSSlider(container, options = {}, plugins = []) {
+function ABCarousel(container, options = {}, plugins = []) {
     /**
      * An object to store the loaded transitions an effects
      *
@@ -29,7 +29,7 @@ function ABSSlider(container, options = {}, plugins = []) {
     /**
      * Load the plugins of the effects and transitions
      */
-    plugins.concat([ABSFade, ABSSlide, ABSKenBurns]).forEach(plugin => {
+    plugins.concat([ABFade, ABSlide, ABKenBurns]).forEach(plugin => {
         const plugin_instance = plugin();
         if (plugin_instance.type === 'transition') {
             plugin_map.transitions[plugin_instance.name] = plugin_instance;
@@ -94,7 +94,7 @@ function ABSSlider(container, options = {}, plugins = []) {
      */
     function initSingleSlider(el) {
         if (el !== null) {
-            let assigned_options = Object.assign({...defaultOptions()}, {...options}, {...el.dataset});
+            let assigned_options = Object.assign({...default_options()}, {...options}, {...el.dataset});
             let transition_name = assigned_options.transition;
             let slides = el.getElementsByClassName(assigned_options.slide_class);
 
@@ -115,7 +115,7 @@ function ABSSlider(container, options = {}, plugins = []) {
      * @param transition_name
      * @param assigned_options
      */
-    function animateSlider(slides, transition_name = 'ABSSlide', assigned_options = {}) {
+    function animateSlider(slides, transition_name = 'ABSlide', assigned_options = {}) {
         let slide_index = 0;
         const transition_plugin = plugin_map.transitions[transition_name];
 
@@ -134,10 +134,10 @@ function ABSSlider(container, options = {}, plugins = []) {
     }
 
     /**
-     * The main process of the abs-slider module
+     * The main process of the ab-carousel module
      */
     return {
-        name: 'abs-slider',
+        name: 'ab-carousel',
         init() {
             const rootElements = document.querySelectorAll(container);
             if (rootElements.length > 0) {
@@ -152,6 +152,6 @@ function ABSSlider(container, options = {}, plugins = []) {
     };
 }
 
-ABSSlider.globalOptions = undefined;
+ABCarousel.globalOptions = undefined;
 
-export {ABSSlider as default};
+export {ABCarousel as default};
