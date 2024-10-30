@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport"
-              content="width=device-width, user-scalabs-le=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="Author" content="Andrés Bedoya"/>
         <title>ABCarousel - Ken Burns effect example</title>
@@ -15,25 +15,35 @@
                 <h3>Slide effect</h3>
                 <div class="ab-carousel" data-transition="ABSlide" data-slide_speed="9000">
                     <div class="ab-carousel-container">
-                        <div class="ab-carousel-slide">
-                            <span>Slide without an image</span>
+                        <div class="ab-carousel-slide" style="border: 1px solid rgb(15 23 42)">
+                            <span>
+                                <strong>Slide 1:</strong>
+                                Slide without an image
+                            </span>
                         </div>
                         <div class="ab-carousel-slide">
                             <img alt="Example picture"
-                                 src="https://picsum.photos/id/1084/450/300?grayscale"
-                                 style="width: 640px; height: 360px;"
-                                 class="ab-carousel-slide-image"
+                                 src="https://picsum.photos/id/1084/450/300"
+                                 class="ab-carousel-slide-background"
                                  data-zoom_start="1"
                                  data-zoom_final="1.25"
                                  data-pan_amount="10%"
                                  data-pan_direction="45"
                                  data-effect="ABKenBurns"
                             />
-                            <span>This slide's image has a Ken Burns effect</span>
+                            <span>
+                                <strong>Slide 2:</strong>
+                                This slide's image has a Ken Burns effect
+                            </span>
                         </div>
                         <div class="ab-carousel-slide">
-                            <img alt="Another example picture" src="https://picsum.photos/id/1083/450/300?grayscale" style="width: 640px; height: 360px;" />
-                            <span style="color: rgba(255, 255, 255, 1);">This slide's image doesn't have an effect applied</span>
+                            <img alt="Another example picture" src="https://picsum.photos/id/1083/450/300"
+                                 class="ab-carousel-slide-background"
+                            />
+                            <span style="color: rgba(255, 255, 255, 1);">
+                                <strong>Slide 3: </strong>
+                                This slide's image doesn't have an effect applied
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -44,26 +54,44 @@
                 <h3>Fade effect</h3>
                 <div class="ab-carousel" data-transition="ABFade" data-slide_speed="6000">
                     <div class="ab-carousel-container" style="height: 100%;">
-                        <div class="ab-carousel-slide"
-                             style="background-color: rgba(30, 41, 59, 1); color: rgba(255, 255, 255, 1); width: 100%; height: 360px;">
-                            <span>Slide without an image</span>
-                        </div>
                         <div class="ab-carousel-slide">
                             <img alt="Example picture"
-                                 src="https://picsum.photos/id/235/450/300"
-                                 style="width: 640px; height: 360px;"
-                                 class="ab-carousel-slide-image"
+                                 src="https://picsum.photos/id/511/450/300"
+                                 class="ab-carousel-slide-background"
                                  data-zoom_start="1"
                                  data-zoom_final="1.25"
                                  data-pan_amount="10%"
                                  data-pan_direction="45"
                                  data-effect="ABKenBurns"
                             />
-                            <span>This slide's image has a Ken Burns effect</span>
+                            <span>
+                                <strong>Slide 1:</strong>
+                                A slide with a background picture with Ken Burns effect
+                            </span>
                         </div>
                         <div class="ab-carousel-slide">
-                            <img alt="Another example picture" src="https://picsum.photos/id/236/450/300" style="width: 640px; height: 360px;" />
-                            <span>This slide's image doesn't have an effect applied</span>
+                            <img alt="Example picture"
+                                 src="https://picsum.photos/id/235/450/300"
+                                 class="ab-carousel-slide-background"
+                                 data-zoom_start="1"
+                                 data-zoom_final="1.25"
+                                 data-pan_amount="10%"
+                                 data-pan_direction="45"
+                                 data-effect="ABKenBurns"
+                            />
+                            <span>
+                                <strong>Slide 2:</strong>
+                                A slide with a picture with Ken Burns effect
+                            </span>
+                        </div>
+                        <div class="ab-carousel-slide">
+                            <img alt="Another example picture" src="https://picsum.photos/id/337/450/300"
+                                 class="ab-carousel-slide-background"
+                            />
+                            <span style="color: rgba(0, 0, 0, 1);">
+                                <strong>Slide 3:</strong>
+                                Another slide with a picture without effects applied
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -72,8 +100,11 @@
         <script type="module">
             import ABCarousel from "../src/core/ab-carousel.js";
 
-            let slider = new abs-Slider('.ab-carousel');
-            slider.init();
-        </script>
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('.ab-carousel').forEach((container) => {
+                    new ABCarousel(container);
+                });
+            });
+    </script>
     </body>
 </html>

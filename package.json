@@ -12,7 +12,7 @@
         "npm"
     ],
     "author": "Andrés Bedoya",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "name": "ab-carousel",
     "main": "src/core/ab-carousel.js",
     "style": "./src/css/ab-carousel.css",
@@ -27,7 +27,7 @@
     "files": [
         "examples",
         "src",
-        "dist"
+        "logo.svg"
     ],
     "license": "MIT",
     "type": "module",

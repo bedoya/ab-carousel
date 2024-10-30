@@ -31,7 +31,6 @@ h3 {
     margin: auto;
     width: 640px;
     height: 360px;
-    background-color: rgba(208, 236, 35, 1);
 }
 .ab-carousel-slide {
     display: flex;
@@ -39,7 +38,34 @@ h3 {
     justify-content: center;
 }
 .ab-carousel-slide > span {
-    display: inline;
+    display: inline-block;
     text-align: center;
     margin: 20px;
+    position: relative;
+}
+.ab-carousel-slide > span > strong {
+     display: inline-block;
+    position: relative;
+}
+.ab-carousel-buttons {
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px;
+}
+.ab-carousel-buttons > .button {
+    background-color: rgb(15, 23, 42);
+    color: white;
+    padding: 3px;
+    border-radius: 6px;
+    transition: 0.3s;
+    line-height: 2rem;
+    width: 2.4rem;
+    height: 2.4rem;
+}
+.ab-carousel-buttons > .button:hover {
+    background-color: rgb(255, 102, 0);
+    color: rgb(15, 23, 42);
+}
+.flipped {
+    transform: rotateY(180deg);
 }

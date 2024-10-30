@@ -5,13 +5,12 @@
  */
 const default_options = () => {
     return {
-        slide_speed: 9000,
+        slide_speed: 6000,
         is_active: true,
         direction: true,
-        transition: 'ABFade',
-        container_class: 'ab-carousel',
+        transition: 'ABSlide',
         slide_class: 'ab-carousel-slide',
-        slide_image_class: 'ab-carousel-slide-image',
+        slide_image_class: 'ab-carousel-slide-background',
     };
 };
 

@@ -1,7 +1,7 @@
 import default_options from './options.js';
 
 function ABKenBurns() {
-    let kenBurnsOptions;
+    let ken_burns_options;
 
     /**
      * Applies the KenBurns effect to the given image
@@ -12,11 +12,11 @@ function ABKenBurns() {
         image.style.transform = 'none';
         image.offsetHeight;
 
-        const zoom_start = parseFloat(kenBurnsOptions.zoom_start);
-        const zoom_final = parseFloat(kenBurnsOptions.zoom_final);
-        const pan_amount = parseFloat(kenBurnsOptions.pan_amount);
-        const pan_direction = kenBurnsOptions.pan_direction;
-        const duration = parseFloat(kenBurnsOptions.duration);
+        const zoom_start = parseFloat(ken_burns_options.zoom_start);
+        const zoom_final = parseFloat(ken_burns_options.zoom_final);
+        const pan_amount = parseFloat(ken_burns_options.pan_amount);
+        const pan_direction = ken_burns_options.pan_direction;
+        const duration = parseFloat(ken_burns_options.duration);
 
         const panX = Math.cos(pan_direction * (Math.PI / 180)) * pan_amount;
         const panY = Math.sin(pan_direction * (Math.PI / 180)) * pan_amount;
@@ -74,7 +74,7 @@ function ABKenBurns() {
         name: 'ABKenBurns',
         type: 'effect',
         init(image) {
-            kenBurnsOptions = Object.assign({...default_options()}, image.dataset);
+            ken_burns_options = Object.assign({...default_options()}, image.dataset);
             applyEffect(image);
         },
         applyEffect: applyEffect,

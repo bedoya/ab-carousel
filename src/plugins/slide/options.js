@@ -5,7 +5,7 @@
  */
 const default_options = () => {
     return {
-        'transition_speed': 1500,
+        'transition_speed': 1000,
         'transition_direction': true,
         'slide_class': 'ab-carousel-slide',
     };
