@@ -60,9 +60,7 @@
             import ABCarousel from "../src/core/ab-carousel.js";
 
             document.addEventListener('DOMContentLoaded', () => {
-                const container = document.querySelector('.ab-carousel');
-
-                const carousel = new ABCarousel(container);
+                const carousel = new ABCarousel(document.querySelector('.ab-carousel'));
             });
     </script>
     </body>

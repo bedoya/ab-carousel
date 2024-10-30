@@ -28,6 +28,7 @@ class ABCarousel {
         this.slides = this.elem.querySelectorAll(`.${this.options.slide_class}`);
         this.loadPlugins(plugins);
         this.transition_plugin = this.plugins.transitions[this.options.transition];
+        this.initControls();
         this.initCarousel();
     }
 
@@ -54,6 +55,79 @@ class ABCarousel {
     }
 
     /**
+     * Initializes the previous and next controls
+     */
+    initControls() {
+        const prev_button = this.elem.querySelector('.' + this.options.buttons.prev.class);
+        const next_button = this.elem.querySelector('.' + this.options.buttons.next.class);
+
+        const handleButtonClick = (direction) => {
+            let next_index = this.getNextSlideIndex(direction);
+            this.transitionSlides(next_index);
+            this.slide_index = next_index;
+
+            if (this.options.is_active) {
+                this.animateSlider();
+            }
+        };
+
+        if (prev_button) {
+            prev_button.addEventListener('click', () => handleButtonClick(-1));
+        }
+        if (next_button) {
+            next_button.addEventListener('click', () => handleButtonClick(1));
+        }
+    }
+
+    /**
+     * This is the main function of the slider. It will run the animation
+     */
+    animateSlider() {
+        this.resetInterval();
+
+        this.slide_interval = setInterval(() => {
+            const next_index = this.getNextSlideIndex();
+            this.transitionSlides(next_index);
+            this.slide_index = next_index;
+        }, this.options.slide_speed);
+    }
+
+    /**
+     * Stop the slider from transitioning
+     */
+    stopSlider(){
+        this.options.is_active = false;
+        this.resetInterval();
+    }
+
+    startSlider() {
+        this.options.is_active = true;
+        this.animateSlider();
+    }
+
+    /**
+     * Resets the time interval of the slider
+     */
+    resetInterval(){
+        if (this.slide_interval) {
+            clearInterval(this.slide_interval);
+        }
+    }
+
+    transitionSlides(next_index){
+        if (this.transition_plugin && typeof this.transition_plugin.init === 'function') {
+            this.transition_plugin.init(this.slides[this.slide_index], this.slides[next_index]);
+        }
+        else {
+            hideElement(this.slides[this.slide_index]);
+            showElement(this.slides[next_index]);
+        }
+        Array.from(this.slides[next_index].children).forEach(child => {
+            this.applyEffects(child);
+        });
+    }
+
+    /**
      * This function initializes a single carousel
      */
     initCarousel() {
@@ -69,7 +143,7 @@ class ABCarousel {
 
             const inactive_values = [false, 'false', 0, '0'];
             if (!inactive_values.includes(this.options.is_active)) {
-                this.animateSlider();
+                this.startSlider();
             }
         }
     }
@@ -99,39 +173,17 @@ class ABCarousel {
     }
 
     /**
-     * This is the main function of the slider. It will run the animation
-     */
-    animateSlider() {
-        if (this.slide_interval) {
-            clearInterval(this.slide_interval);
-        }
-
-        this.slide_interval = setInterval(() => {
-            const next_index = this.getNextSlideIndex();
-            if (this.transition_plugin && typeof this.transition_plugin.init === 'function') {
-                this.transition_plugin.init(this.slides[this.slide_index], this.slides[next_index]);
-            }
-            else {
-                hideElement(this.slides[this.slide_index]);
-                showElement(this.slides[next_index]);
-            }
-            Array.from(this.slides[next_index].children).forEach(child => {
-                this.applyEffects(child);
-            });
-            this.slide_index = next_index;
-        }, this.options.slide_speed);
-    }
-
-    /**
      * Updates the slide index
      *
      * @returns number
      */
-    getNextSlideIndex() {
+    getNextSlideIndex(direction = null) {
+
         let slider_direction = () => {
             return this.options.direction ? 1 : -1;
         };
-        let n = this.slide_index + slider_direction();
+
+        let n = this.slide_index + (slider_direction() * (direction == null ? 1 : parseInt(direction)));
 
         if (n < 0) {
             n = this.slides.length - 1;

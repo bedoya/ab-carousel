@@ -11,6 +11,10 @@ const default_options = () => {
         transition: 'ABSlide',
         slide_class: 'ab-carousel-slide',
         slide_image_class: 'ab-carousel-slide-background',
+        buttons: {
+            prev: { class: 'ab-carousel-button-prev' },
+            next: { class: 'ab-carousel-button-next' },
+        },
     };
 };
 
