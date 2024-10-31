@@ -16,6 +16,12 @@ class ABFade {
         this.fade_options = Object.assign({...default_options()}, options);
     }
 
+    /**
+     * Initializes the transition for the given slides
+     *
+     * @param current_slide
+     * @param next_slide
+     */
     init(current_slide, next_slide) {
         this.current_slide = current_slide;
         this.next_slide = next_slide;
@@ -38,6 +44,9 @@ class ABFade {
             this.transitionSlides(-1);
     }
 
+    /**
+     * The main function that takes care of the transition
+     */
     transitionSlides() {
         let opacity_out = this.fade_options.max_opacity;
         let opacity_in = this.fade_options.min_opacity;
