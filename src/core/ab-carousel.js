@@ -19,16 +19,16 @@ class ABCarousel {
      */
     constructor(elem, options = {}, plugins = []) {
         this.elem = elem;
-        this.slide_index = 0;
-        this.slide_interval = null;
-
-        this.event_emitter = new EventEmitter();
 
         this.options = Object.assign(
             {...default_options()},
             {...options},
             {...this.elem.dataset}
         );
+
+        this.slide_index = 0;
+        this.event_emitter = new EventEmitter();
+        this.slide_interval = null;
 
         this.slides = this.elem.querySelectorAll(`.${this.options.slide_class}`);
         this.loadPlugins(plugins);
@@ -246,6 +246,23 @@ class ABCarousel {
         return n;
     }
 
+    /**
+     * Returns the slides of the slider
+     *
+     * @returns {*}
+     */
+    getSlides(){
+        return Array.from(this.elem.querySelectorAll('.' + this.options.slide_class));
+    }
+
+    /**
+     * Returns the thumbnails of the slider
+     *
+     * @returns {*}
+     */
+    getThumbnails(){
+        return Array.from(this.elem.querySelectorAll('.' + this.options.thumbnails.class));
+    }
     /**
      * Handles the direction of the button click
      *
