@@ -69,3 +69,36 @@ h3 {
 .flipped {
     transform: rotateY(180deg);
 }
+.ab-carousel-thumbnails-container {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    bottom: 0;
+}
+.ab-carousel-thumbnails {
+    bottom: -500px;
+    height: 20px;
+    max-width: 50%;
+    margin: 0 auto;
+}
+.ab-carousel-thumbnail {
+    text-align: center;
+    flex: 1 1 0;
+    min-height: 40px;
+    line-height: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-weight: bold;
+}
+.ab-carousel-thumbnail-button {
+    background-image: url('../img/thumbnail-marker.svg');
+    color: rgb(255, 255, 255);
+}
+.ab-carousel-thumbnail-button:hover {
+    background-image: url('../img/thumbnail-hover-marker.svg');
+    color: rgb(15, 23, 42);
+}
+.ab-carousel-thumbnail-active-button {
+    background-image: url('../img/thumbnail-active-marker.svg');
+}
