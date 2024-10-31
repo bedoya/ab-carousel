@@ -8,7 +8,7 @@ const default_options = () => {
         slide_speed: 6000,
         is_active: true,
         direction: true,
-        transition: 'ABFade',
+        transition: 'ABSlide',
         slide_class: 'ab-carousel-slide',
         slide_image_class: 'ab-carousel-slide-background',
         buttons: {
@@ -16,6 +16,9 @@ const default_options = () => {
             next: {class: 'ab-carousel-button-next'},
             stop: {class: 'ab-carousel-button-stop'}
         },
+        thumbnails: {
+            class: 'ab-carousel-thumbnail'
+        }
     };
 };
 

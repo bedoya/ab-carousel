@@ -44,9 +44,9 @@ class ABCarousel {
         if (this.elem !== null) {
             if(this.slide_interval == null){
                 hideAll(this.slides);
-                showElement(this.slides[0]);
-
-                Array.from(this.slides[0].children).forEach(child => {
+                showElement(this.slides[this.slide_index]);
+                this.updateThumbnailActiveState();
+                Array.from(this.slides[this.slide_index].children).forEach(child => {
                     this.applyEffects(child);
                 });
             }
@@ -95,8 +95,47 @@ class ABCarousel {
             }
         });
 
+        this.thumbnails = this.elem.querySelectorAll('.' + this.options.thumbnails.class);
+        if(this.thumbnails.length > 0){
+            this.thumbnails.forEach((thumbnail, index) => {
+                thumbnail.classList.add('ab-carousel-thumbnail-button');
+                thumbnail.addEventListener('click', () => {
+                    this.goToSlide(index);
+                    this.updateThumbnailActiveState(index);
+                });
+            });
+        }
+
         this.event_emitter.on('buttonClicked', this.handleButtonClick.bind(this));
         this.event_emitter.on('stopSlider', this.stopSlider.bind(this));
+    }
+
+    /**
+     * Moves the slider to the given slide
+     *
+     * @param index
+     */
+    goToSlide(index){
+        this.transitionSlides(index);
+        this.slide_index = index;
+    }
+
+    /**
+     * Updates the thumbnail classes
+     */
+    updateThumbnailActiveState(){
+        if(this.thumbnails.length > 0){
+            this.thumbnails.forEach((thumbnail, index) => {
+                if (index === this.slide_index) {
+                    thumbnail.classList.add('ab-carousel-thumbnail-active-button');
+                    thumbnail.classList.remove('ab-carousel-thumbnail-button');
+                }
+                else {
+                    thumbnail.classList.remove('ab-carousel-thumbnail-active-button');
+                    thumbnail.classList.add('ab-carousel-thumbnail-button');
+                }
+            });
+        }
     }
 
     /**
@@ -109,6 +148,7 @@ class ABCarousel {
             const next_index = this.getNextSlideIndex();
             this.transitionSlides(next_index);
             this.slide_index = next_index;
+            this.updateThumbnailActiveState();
         }, this.options.slide_speed);
     }
 
