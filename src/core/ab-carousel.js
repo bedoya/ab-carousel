@@ -1,5 +1,8 @@
 import {hideAll, showElement, hideElement} from '../utils/helpers.js';
 import default_options from './options.js';
+import Button from './button.js';
+import EventEmitter from './event-emitter.js';
+
 import './styles/ab-carousel.css';
 
 import ABFade from '../plugins/fade/ab-carousel-fade.js';
@@ -19,6 +22,8 @@ class ABCarousel {
         this.slide_index = 0;
         this.slide_interval = null;
 
+        this.event_emitter = new EventEmitter();
+
         this.options = Object.assign(
             {...default_options()},
             {...options},
@@ -30,6 +35,27 @@ class ABCarousel {
         this.transition_plugin = this.plugins.transitions[this.options.transition];
         this.initControls();
         this.initCarousel();
+    }
+
+    /**
+     * This function initializes a single carousel
+     */
+    initCarousel() {
+        if (this.elem !== null) {
+            if(this.slide_interval == null){
+                hideAll(this.slides);
+                showElement(this.slides[0]);
+
+                Array.from(this.slides[0].children).forEach(child => {
+                    this.applyEffects(child);
+                });
+            }
+
+            const inactive_values = [false, 'false', 0, '0'];
+            if (!inactive_values.includes(this.options.is_active)) {
+                this.startSlider();
+            }
+        }
     }
 
     /**
@@ -58,25 +84,22 @@ class ABCarousel {
      * Initializes the previous and next controls
      */
     initControls() {
-        const prev_button = this.elem.querySelector('.' + this.options.buttons.prev.class);
-        const next_button = this.elem.querySelector('.' + this.options.buttons.next.class);
-
-        const handleButtonClick = (direction) => {
-            let next_index = this.getNextSlideIndex(direction);
-            this.transitionSlides(next_index);
-            this.slide_index = next_index;
-
-            if (this.options.is_active) {
-                this.animateSlider();
+        this.buttons = {};
+        this.elem.querySelectorAll('.button').forEach(button =>{
+            let class_list = button.className.split(' ');
+            if(class_list.includes('prev')){
+                this.buttons.prev = new Button(button, this.event_emitter, {type: 'direction', direction: -1});
             }
-        };
+            else if(class_list.includes('next')){
+                this.buttons.next = new Button(button, this.event_emitter, {type: 'direction', direction: 1});
+            }
+            else if(class_list.includes('stop')){
+                this.buttons.stop = new Button(button, this.event_emitter, {type: 'stop', direction: 1});
+            }
+        });
 
-        if (prev_button) {
-            prev_button.addEventListener('click', () => handleButtonClick(-1));
-        }
-        if (next_button) {
-            next_button.addEventListener('click', () => handleButtonClick(1));
-        }
+        this.event_emitter.on('buttonClicked', this.handleButtonClick.bind(this));
+        this.event_emitter.on('stopSlider', this.stopSlider.bind(this));
     }
 
     /**
@@ -100,6 +123,9 @@ class ABCarousel {
         this.resetInterval();
     }
 
+    /**
+     * Starts the slider animation
+     */
     startSlider() {
         this.options.is_active = true;
         this.animateSlider();
@@ -114,6 +140,11 @@ class ABCarousel {
         }
     }
 
+    /**
+     * Starts the transition between two slides
+     *
+     * @param next_index
+     */
     transitionSlides(next_index){
         if (this.transition_plugin && typeof this.transition_plugin.init === 'function') {
             this.transition_plugin.init(this.slides[this.slide_index], this.slides[next_index]);
@@ -125,27 +156,6 @@ class ABCarousel {
         Array.from(this.slides[next_index].children).forEach(child => {
             this.applyEffects(child);
         });
-    }
-
-    /**
-     * This function initializes a single carousel
-     */
-    initCarousel() {
-        if (this.elem !== null) {
-            if(this.slide_interval == null){
-                hideAll(this.slides);
-                showElement(this.slides[0]);
-
-                Array.from(this.slides[0].children).forEach(child => {
-                    this.applyEffects(child);
-                });
-            }
-
-            const inactive_values = [false, 'false', 0, '0'];
-            if (!inactive_values.includes(this.options.is_active)) {
-                this.startSlider();
-            }
-        }
     }
 
     /**
@@ -193,6 +203,22 @@ class ABCarousel {
         }
         return n;
     }
+
+    /**
+     * Handles the direction of the button click
+     *
+     * @param event_data
+     */
+    handleButtonClick(event_data) {
+        const { direction } = event_data;
+        let next_index = this.getNextSlideIndex(direction);
+        this.transitionSlides(next_index);
+        this.slide_index = next_index;
+
+        if (this.options.is_active) {
+            this.animateSlider();
+        }
+    };
 }
 
 export default ABCarousel;

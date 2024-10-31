@@ -12,8 +12,9 @@ const default_options = () => {
         slide_class: 'ab-carousel-slide',
         slide_image_class: 'ab-carousel-slide-background',
         buttons: {
-            prev: { class: 'ab-carousel-button-prev' },
-            next: { class: 'ab-carousel-button-next' },
+            prev: {class: 'ab-carousel-button-prev'},
+            next: {class: 'ab-carousel-button-next'},
+            stop: {class: 'ab-carousel-button-stop'}
         },
     };
 };
