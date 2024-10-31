@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.1.0] - 2024-10-30
+
+### Added
+- **Button class**: Introduced a `Button` class for encapsulating button behavior.
+- **EventEmitter**: Added to manage custom events within the carousel.
+- **Dynamic button initialization**: Implemented to simplify button assignment and functionality.
+- **Button actions**: Integrated actions for `prev`, `next`, and `stop` with distinct event emissions.
+
+### Changed
+- **`initControls` method**: Refactored for streamlined button initialization and event handling.
+- **HTML structure**: Updated example buttons to utilize class-based identification.
+
+### Fixed
+- Improved handling of button clicks to trigger appropriate events.
+- Fixed slide transition issues for better visibility during animations.
+
+## [0.0.7] - 2024-10-29
+
 ### Added
 - **applyEffects method**: Added to handle applying effects per slide.
 - **transition_plugin**: Set up to manage transitions, moved out of `animateSlider` for optimization.

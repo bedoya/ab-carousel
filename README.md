@@ -51,8 +51,8 @@ To use the carousel, ensure your HTML structure follows this format:
         </div>
     </div>
     <div class="ab-carousel-buttons">
-        <div class="button ab-carousel-button-prev">Prev</div>
-        <div class="button ab-carousel-button-next">Next</div>
+        <div class="button prev ab-carousel-button-prev">Prev</div>
+        <div class="button next ab-carousel-button-next">Next</div>
     </div>
 </div>
 ```
@@ -114,7 +114,7 @@ The package ships with two **transitions** and one **effect** already.
 ### Transition Plugins
 - `ABFade`: A fade transition between slides.
 - `ABSlide`: A sliding transition from one slide to the next.
-- 
+
 ### Effect Plugins
 - `ABKenBurns`: Creates a smooth zoom and pan effect.
 
