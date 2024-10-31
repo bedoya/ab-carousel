@@ -118,6 +118,9 @@ class ABCarousel {
     goToSlide(index){
         this.transitionSlides(index);
         this.slide_index = index;
+        if(this.options.is_active){
+            this.animateSlider();
+        }
     }
 
     /**
