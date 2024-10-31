@@ -6,8 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.1.1] - 2024-10-31
+
+### Added
+- **Class-based Plugins**: Converted transition and effect plugins to class-based implementations for better organization and encapsulation.
+
+### Changed
+- **Plugin Initialization**: Refactored plugin initialization to use classes, enhancing structure and readability.
+
 ### Fixed
-- Slider transition direction when the `prev` button is clicked
+- Slider transition direction when the `prev` button is clicked.
+- Improved handling of button clicks to trigger appropriate events.
 
 ## [0.1.0] - 2024-10-30
 
