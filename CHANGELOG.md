@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 - **Class-based Plugins**: Converted transition and effect plugins to class-based implementations for better organization and encapsulation.
+- **Slider thumbnails**: Implemented a new functionality for the slider. Using dots or thumbnails of the slides to
+  indicate the active slide and also to navigate to a given slide.
 
 ### Changed
 - **Plugin Initialization**: Refactored plugin initialization to use classes, enhancing structure and readability.
