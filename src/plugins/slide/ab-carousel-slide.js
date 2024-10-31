@@ -1,58 +1,91 @@
-import {showElement, hideElement} from '../../utils/helpers.js';
+import {hideElement, showElement} from '../../utils/helpers.js';
 import default_options from './options.js';
 
-function ABSlide(options = {}) {
-    let slide_options;
+class ABSlide {
+    constructor(options = {}, event_emitter) {
+        this.name = 'ABSlide';
+        this.type = 'transition';
+        this.event_emitter = event_emitter;
+        this.handleButtonClick = this.handleButtonClick.bind(this);
 
-    function transitionSlides(current_slide, next_slide) {
-        slide_options = Object.assign({...default_options()}, options);
-        const slider_container = current_slide.parentElement;
-        const slider_width = slider_container.offsetWidth;
-        const transition_speed = parseFloat(slide_options.transition_speed);
-        const slide_direction = slide_options.transition_direction ? 1 : -1;
+        this.slide_options = Object.assign({...default_options()}, options);
+    }
 
-        const step = ( slider_width / transition_speed * slide_direction ) * 16;
-        let progress = 0;
+    init(current_slide, next_slide) {
+        this.current_slide = current_slide;
+        this.next_slide = next_slide;
+        this.width = this.current_slide.parentElement.offsetWidth;
+        this.step = Math.abs(this.width / parseFloat(this.slide_options.transition_speed) * 16);
 
-        showElement(current_slide);
-        showElement(next_slide);
+        this.removeListeners();
+        this.event_emitter.on('buttonClicked', this.handleButtonClick);
 
-        current_slide.style.transform = 'translateX(0)';
-        next_slide.style.transform = `translateX(${slider_container * slide_direction}px)`;
+        this.transitionSlides();
+    }
 
-        let start_time;
+    /**
+     * What to do when the plugin detects a button click event
+     *
+     * @param event
+     */
+    handleButtonClick(event) {
+        const {direction} = event;
+        (direction === -1) ?
+            this.transitionSlides(1) :
+            this.transitionSlides(-1);
+    }
 
-        function slide(timestamp) {
-            if (!start_time) {
-                start_time = timestamp;
-            }
+    /**
+     * The main function that performs the transition
+     *
+     * @param slide_direction
+     */
+    transitionSlides(slide_direction = null) {
+        this.slide_direction = (slide_direction === null) ?
+            (this.slide_options.transition_direction ? -1 : 1) :
+            slide_direction;
+        this.progress = 0;
 
-            current_slide.style.transform = `translateX(${progress}px)`;
-            next_slide.style.transform = `translateX(${(progress - (slide_direction * slider_width))}px)`;
+        showElement(this.current_slide);
+        showElement(this.next_slide);
 
-            if (Math.abs(progress) < slider_width) {
-                progress += step;
+        this.current_slide.style.transform = 'translateX(0px)';
+        this.next_slide.style.transform = 'translateX(' + this.nextSlideOrigin() + 'px)';
+
+        const self = this;
+
+        function slide() {
+            self.current_slide.style.transform = 'translateX(' + Math.round(self.progress * self.slide_direction) + 'px)';
+            self.next_slide.style.transform = 'translateX(' + (self.nextSlideOrigin() + Math.round(self.progress * self.slide_direction)) + 'px)';
+
+            if (Math.abs(self.progress) < self.width) {
+                self.progress += self.step;
                 requestAnimationFrame(slide);
             }
             else {
-                hideElement(current_slide);
-                next_slide.style.transform = 'translateX(0px)';
+                hideElement(self.current_slide);
+                self.next_slide.style.transform = 'translateX(0px)';
             }
         }
 
         requestAnimationFrame(slide);
     }
 
-    return {
-        name: 'ABSlide',
-        type: 'transition',
-        init(current_slide, next_slide) {
-            slide_options = Object.assign({...default_options()}, options);
-            transitionSlides(current_slide, next_slide);
-        }
-    };
+    /**
+     * Determines the x position of the next slide
+     *
+     * @returns {number|*}
+     */
+    nextSlideOrigin() {
+        return (this.slide_direction === 1) ? this.width * -1 : this.width;
+    }
+
+    /**
+     * Removes previous listeners
+     */
+    removeListeners() {
+        this.event_emitter.off('buttonClicked', this.handleButtonClick);
+    }
 }
 
-ABSlide.globalOptions = undefined;
-
-export {ABSlide as default};
+export default ABSlide;

@@ -1,33 +1,50 @@
 import default_options from './options.js';
 
-function ABKenBurns() {
-    let ken_burns_options;
+class ABKenBurns {
+    /**
+     * The constructor of the class
+     */
+    constructor() {
+        this.name = 'ABKenBurns';
+        this.type = 'effect';
+    }
 
     /**
-     * Applies the KenBurns effect to the given image
+     * Initializes the effect for the element
      *
      * @param image
      */
-    function applyEffect(image) {
-        image.style.transform = 'none';
-        image.offsetHeight;
+    init(image) {
+        this.image = image;
+        this.ken_burns_options = Object.assign({...default_options()}, this.image.dataset);
+        this.applyEffect();
+    }
 
-        const zoom_start = parseFloat(ken_burns_options.zoom_start);
-        const zoom_final = parseFloat(ken_burns_options.zoom_final);
-        const pan_amount = parseFloat(ken_burns_options.pan_amount);
-        const pan_direction = ken_burns_options.pan_direction;
-        const duration = parseFloat(ken_burns_options.duration);
+    /**
+     * Applies the KenBurns effect to the given image
+     */
+    applyEffect() {
+        this.image.style.transform = 'none';
+        this.image.offsetHeight;
+
+        const zoom_start = parseFloat(this.ken_burns_options.zoom_start);
+        const zoom_final = parseFloat(this.ken_burns_options.zoom_final);
+        const pan_amount = parseFloat(this.ken_burns_options.pan_amount);
+        const pan_direction = this.ken_burns_options.pan_direction;
+        const duration = parseFloat(this.ken_burns_options.duration);
 
         const panX = Math.cos(pan_direction * (Math.PI / 180)) * pan_amount;
         const panY = Math.sin(pan_direction * (Math.PI / 180)) * pan_amount;
 
-        image.style.transform = 'scale(' + zoom_start + ')';
-        image.style.transition = 'transform ' + (duration / 1000) + 's ease-in-out';
+        this.image.style.transform = 'scale(' + zoom_start + ')';
+        this.image.style.transition = 'transform ' + (duration / 1000) + 's ease-in-out';
 
         setTimeout(() => {
             let start_time;
             let progress = 0;
             let scale;
+
+            const self = this;
 
             function effect(timestamp) {
                 if (!start_time) {
@@ -38,16 +55,16 @@ function ABKenBurns() {
                 // Only apply the transformation during the duration
                 if (elapsed < duration) {
                     progress = elapsed / duration;
-                    scale = zoom_start + ( (zoom_final - zoom_start) * progress );
+                    scale = zoom_start + ((zoom_final - zoom_start) * progress);
                     const translateX = panX * progress;
                     const translateY = panY * progress;
 
-                    image.style.transform = `scale(${scale}) translateX(${translateX}px) translateY(${translateY}px)`;
+                    self.image.style.transform = 'scale(' + scale + ') translateX(' + translateX + 'px) translateY(' + translateY + 'px)';
 
-                    requestAnimationFrame(effect); // Continue the animation
+                    requestAnimationFrame(effect);
                 }
                 else {
-                    image.style.transform = `scale(${zoom_final}) translateX(${panX}px) translateY(${panY}px)`;
+                    self.resetEffect(self.image);
                 }
             }
 
@@ -58,10 +75,8 @@ function ABKenBurns() {
 
     /**
      * Removes the effects applied to the background image
-     *
-     * @param image
      */
-    function resetEffect(image) {
+    resetEffect(image) {
         image.style.transform = 'scale(1) translate(0, 0)';
         image.style.transition = 'none';
 
@@ -69,19 +84,6 @@ function ABKenBurns() {
             image.style.transition = '';
         }, 50);
     }
-
-    return {
-        name: 'ABKenBurns',
-        type: 'effect',
-        init(image) {
-            ken_burns_options = Object.assign({...default_options()}, image.dataset);
-            applyEffect(image);
-        },
-        applyEffect: applyEffect,
-        resetEffect: resetEffect,
-    };
 }
 
-ABKenBurns.globalOptions = undefined;
-
-export {ABKenBurns as default};
+export default ABKenBurns;

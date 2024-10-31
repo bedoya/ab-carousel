@@ -8,7 +8,7 @@ const default_options = () => {
         slide_speed: 6000,
         is_active: true,
         direction: true,
-        transition: 'ABSlide',
+        transition: 'ABFade',
         slide_class: 'ab-carousel-slide',
         slide_image_class: 'ab-carousel-slide-background',
         buttons: {

@@ -32,7 +32,7 @@ class ABCarousel {
 
         this.slides = this.elem.querySelectorAll(`.${this.options.slide_class}`);
         this.loadPlugins(plugins);
-        this.transition_plugin = this.plugins.transitions[this.options.transition];
+        this.transition_plugin = this.transitions[this.options.transition];
         this.initControls();
         this.initCarousel();
     }
@@ -64,18 +64,15 @@ class ABCarousel {
      * @param plugins
      */
     loadPlugins(plugins = []) {
-        this.plugins = {
-            transitions: {},
-            effects: {}
-        };
+        this.transitions = [];
+        this.effects = [];
 
-        plugins.concat([ABFade, ABSlide, ABKenBurns]).forEach(plugin => {
-            const plugin_instance = plugin();
-            if (plugin_instance.type === 'transition') {
-                this.plugins.transitions[plugin_instance.name] = plugin_instance;
+        plugins.concat([new ABSlide({}, this.event_emitter), new ABFade({}, this.event_emitter), new ABKenBurns()]).forEach(plugin => {
+            if (plugin.type === 'transition') {
+                this.transitions[plugin.name] = plugin;
             }
-            else if (plugin_instance.type === 'effect') {
-                this.plugins.effects[plugin_instance.name] = plugin_instance;
+            else if (plugin.type === 'effect') {
+                this.effects[plugin.name] = plugin;
             }
         });
     }
@@ -168,7 +165,7 @@ class ABCarousel {
     applyEffects(elem) {
         const effect_name = elem.dataset.effect;
         if(effect_name){
-            const effect = this.plugins.effects[effect_name];
+            const effect = this.effects[effect_name];
             if (effect && (typeof effect.applyEffect === 'function')) {
                 if (typeof effect.resetEffect === 'function') {
                     effect.resetEffect(elem);
