@@ -38,7 +38,7 @@ class ABFade {
             this.transitionSlides(-1);
     }
 
-    transitionSlides(direction) {
+    transitionSlides() {
         let opacity_out = this.fade_options.max_opacity;
         let opacity_in = this.fade_options.min_opacity;
         let fade_speed = this.fade_options.transition_speed;
