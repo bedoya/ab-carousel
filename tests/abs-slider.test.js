@@ -1,5 +1,5 @@
-import {beforeEach, describe, expect, it, vi} from 'vitest';
-import {showElement, hideElement} from '../src/utils/helpers.js';
+import {beforeEach, describe, expect, it} from 'vitest';
+import {showElement, hideElement, hideAll} from '../src/utils/helpers.js';
 import ABCarousel from '../src/core/ab-carousel.js';
 
 let element;
@@ -57,6 +57,13 @@ describe('Helper functions', () => {
             showElement(slide);
             expect(slide.style.display).toBe('block');
         });
+    });
+
+    it('should hide all the slides in the slider', () => {
+        let slides = slider.getSlides();
+        hideAll(slides);
+        let total = slides.filter(slide => slide.style.display === 'none');
+        expect(total === slides.length);
     });
 });
 

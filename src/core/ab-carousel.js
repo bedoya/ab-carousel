@@ -30,7 +30,7 @@ class ABCarousel {
         this.event_emitter = new EventEmitter();
         this.slide_interval = null;
 
-        this.slides = this.elem.querySelectorAll(`.${this.options.slide_class}`);
+        this.slides = this.getSlides();
         this.loadPlugins(plugins);
         this.transition_plugin = this.transitions[this.options.transition];
         this.initControls();
