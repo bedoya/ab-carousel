@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-## [0.1.3] - 2024-11-12
+## [0.1.4] - 2024-11-12
 
 ### Changed
 - **Animation logic**: Refactored animateSlider to check slide count before starting intervals, ensuring transitions only occur if there is more than one slide.

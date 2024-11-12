@@ -12,7 +12,7 @@
         "npm"
     ],
     "author": "Andrés Bedoya",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "name": "ab-carousel",
     "main": "src/core/ab-carousel.js",
     "style": "./src/css/ab-carousel.css",
