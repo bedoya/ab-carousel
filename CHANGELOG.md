@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.1.3] - 2024-11-12
+
+### Changed
+- **Animation logic**: Refactored animateSlider to check slide count before starting intervals, ensuring transitions only occur if there is more than one slide.
+- **Test coverage**: Enhanced test suite to include:
+  - Transition behavior based on slide count.
+
+## [0.1.2] - 2024-10-31
+
+### Added
+- **Thumbnail Navigation**: Added thumbnails to navigate directly to specific slides.
+
 ## [0.1.1] - 2024-10-31
 
 ### Added
