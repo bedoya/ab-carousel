@@ -1,9 +1,10 @@
-import {beforeEach, describe, expect, it} from 'vitest';
+import {beforeEach, describe, expect, it, vi} from 'vitest';
 import {showElement, hideElement, hideAll} from '../src/utils/helpers.js';
 import ABCarousel from '../src/core/ab-carousel.js';
 
 let element;
 let slider;
+let transition_spy;
 
 beforeEach(() => {
     document.body.innerHTML = '' +
@@ -35,6 +36,7 @@ beforeEach(() => {
         '</div>';
     element = document.querySelector('.ab-carousel');
     slider = new ABCarousel(element);
+    transition_spy = vi.spyOn(slider, 'animateSlider');
 });
 
 describe('Slider setup', () => {
@@ -44,6 +46,25 @@ describe('Slider setup', () => {
 
     it('should return the 5 slides', () => {
         expect(slider.getSlides().length).toBe(5);
+    });
+
+    it('should not transition if the slider has only one slide', () => {
+        document.body.innerHTML = '' +
+            '<div class="ab-carousel">' +
+                '<div class="ab-carousel-container">' +
+                    '<div class="ab-carousel-slide">Slide 1</div>' +
+                '</div>' +
+            '</div>';
+        const local_element = document.querySelector('.ab-carousel');
+        const local_slider = new ABCarousel(local_element);
+        const local_animate_spy = vi.spyOn(local_slider, 'animateSlider');
+        local_slider.initCarousel();
+        expect(local_animate_spy).not.toHaveBeenCalled();
+    });
+
+    it('should transition if the slider has more than one slide', () => {
+        slider.initCarousel();
+        expect(transition_spy).toHaveBeenCalled();
     });
 });
 

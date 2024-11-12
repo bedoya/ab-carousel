@@ -41,7 +41,7 @@ class ABCarousel {
      * This function initializes a single carousel
      */
     initCarousel() {
-        if (this.elem !== null) {
+        if ((this.elem !== null)) {
             if(this.slide_interval == null){
                 hideAll(this.slides);
                 showElement(this.slides[this.slide_index]);
@@ -52,7 +52,7 @@ class ABCarousel {
             }
 
             const inactive_values = [false, 'false', 0, '0'];
-            if (!inactive_values.includes(this.options.is_active)) {
+            if (!inactive_values.includes(this.options.is_active) && (this.slides.length > 1)) {
                 this.startSlider();
             }
         }
@@ -149,12 +149,14 @@ class ABCarousel {
     animateSlider() {
         this.resetInterval();
 
-        this.slide_interval = setInterval(() => {
-            const next_index = this.getNextSlideIndex();
-            this.transitionSlides(next_index);
-            this.slide_index = next_index;
-            this.updateThumbnailActiveState();
-        }, this.options.slide_speed);
+        if(this.slides.length > 1){
+            this.slide_interval = setInterval(() => {
+                const next_index = this.getNextSlideIndex();
+                this.transitionSlides(next_index);
+                this.slide_index = next_index;
+                this.updateThumbnailActiveState();
+            }, this.options.slide_speed);
+        }
     }
 
     /**
