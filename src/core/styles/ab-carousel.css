@@ -21,8 +21,8 @@
     left: 0;
 }
 
-.ab-carousel-slide * {
-    position: absolute;
+.ab-carousel-slide > * {
+    position: relative;
 }
 
 .ab-carousel-slide img.ab-carousel-slide-background {
