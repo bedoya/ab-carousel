@@ -1,3 +1,25 @@
+# Node.js
 node_modules/
-.idea/
 dist/
+.env
+*.log
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Vite
+.vite/
+
+# TypeScript
+*.tsbuildinfo
+
+# IDEs / Editors
+.idea/
+.vscode/
+
+# Test coverage
+coverage/
