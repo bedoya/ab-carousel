@@ -1,42 +1,40 @@
 {
-    "description": "Andrés Bedoya simple slider",
-    "keywords": [
-        "slider",
-        "ab-carousel",
-        "fade",
-        "slide",
-        "ken-burns",
-        "carousel",
-        "annimation",
-        "javascript",
-        "npm"
-    ],
-    "author": "Andrés Bedoya",
-    "version": "0.1.5",
-    "name": "ab-carousel",
-    "main": "src/core/ab-carousel.js",
-    "style": "./src/css/ab-carousel.css",
-    "scripts": {
-        "test": "vitest",
-        "dev": "vite",
-        "build": "vite build",
-        "lint": "eslint .",
-        "start": "webpack serve --open",
-        "prepare": "npm run lint && npm run test"
-    },
-    "files": [
-        "examples",
-        "src",
-        "logo.svg"
-    ],
-    "license": "MIT",
-    "type": "module",
-    "devDependencies": {
-        "@eslint/js": "^9.14.0",
-        "eslint": "^9.13.0",
-        "globals": "^15.11.0",
-        "jsdom": "^25.0.1",
-        "vite": "^5.4.10",
-        "vitest": "^2.1.4"
-    }
+  "name": "ab-carousel",
+  "version": "1.0.0",
+  "description": "A lightweight, extensible, and animation-ready JavaScript carousel with multiple plugins",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:ui": "vitest --ui",
+    "lint": "eslint . --ext .ts"
+  },
+  "homepage": "https://github.com/bedoya/ab-carousel#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bedoya/ab-carousel"
+  },
+  "bugs": {
+    "url": "https://github.com/bedoya/ab-carousel/issues"
+  },
+  "keywords": [],
+  "author": "Andrés Bedoya",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "@types/node": "^24.0.4",
+    "@typescript-eslint/eslint-plugin": "^8.35.0",
+    "@typescript-eslint/parser": "^8.35.0",
+    "@vitest/ui": "^3.2.4",
+    "eslint": "^9.29.0",
+    "globals": "^16.2.0",
+    "jsdom": "^26.1.0",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.0",
+    "vitest": "^3.2.4"
+  }
 }
