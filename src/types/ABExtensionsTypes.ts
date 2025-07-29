@@ -1,3 +1,3 @@
 export type ABEffectTiming = 'beforeTransition' | 'afterTransition';
 
-export type PluginType = 'playback' | 'markers';
+export type PluginType = 'playback' | 'markers' | 'navigation';
