@@ -8,7 +8,8 @@
     ".": {
       "import": "./dist/ab-carousel.es.js",
       "require": "./dist/ab-carousel.cjs.js"
-    }
+    },
+    "./dist/ab-carousel.css": "./dist/ab-carousel.css"
   },
   "types": "dist/index.d.ts",
   "type": "module",
@@ -29,7 +30,21 @@
   "bugs": {
     "url": "https://github.com/bedoya/ab-carousel/issues"
   },
-  "keywords": [],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "carousel",
+    "slider",
+    "javascript",
+    "typescript",
+    "plugin",
+    "modular",
+    "responsive",
+    "lightweight"
+  ],
   "author": "Andrés Bedoya",
   "license": "MIT",
   "devDependencies": {

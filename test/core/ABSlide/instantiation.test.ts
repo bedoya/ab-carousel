@@ -2,6 +2,7 @@ import { buildCarouselFixture } from '/test/utils/buildCarouselFixture';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ABCarousel } from '@/core/ABCarousel';
 import { wait } from '@support/Utilities';
+import { ABSlide } from '@/core/ABSlide';
 
 let carousel: ABCarousel;
 let root: HTMLElement;

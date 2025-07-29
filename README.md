@@ -1,5 +1,10 @@
 # ABCarousel
 
+![Version](https://img.shields.io/npm/v/ab-carousel?style=flat&color=success)
+![License](https://img.shields.io/github/license/bedoya/ab-carousel?style=flat&color=success)
+![Tests](https://img.shields.io/github/actions/workflow/status/bedoya/ab-carousel/tests.yml?label=tests&style=flat&color=success)
+![Downloads](https://img.shields.io/npm/dt/ab-carousel?style=flat&color=success)
+
 **ABCarousel** is a modular, plugin-based carousel for web applications built in TypeScript. It supports transitions and element-level effects using simple HTML markup and declarative attributes.
 
 ## Installation
