@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ABCarousel Demo</title>
+        <link rel="stylesheet" href="../dist/ab-carousel.css">
+        <link rel="stylesheet" href="./css/examples-styles.css">
+    </head>
+    <body>
+        <div style="margin: 20px auto;">
+            <h2 style="margin-bottom: 10px; font-family: 'Open Sans', sans-serif; text-align: center; width: 100%;">
+                Basic setup examples
+            </h2>
+        </div>
+        <div style="width: 600px; margin: 20px auto;">
+            <h3 style="margin-bottom: 10px; font-family: 'Open Sans', sans-serif">Example 1 - Basic setup using data-*</h3>
+            <div class="ab-carousel" data-slide_speed="2000" id="slider-1">
+                <div class="ab-carousel-container">
+                    <section>Slide 1</section>
+                    <section>Slide 2</section>
+                    <section>Slide 3</section>
+                </div>
+            </div>
+        </div>
+        <div style="width: 600px; margin: 20px auto;">
+            <h3 style="margin-bottom: 10px; font-family: 'Open Sans', sans-serif">Example 1 - Basic setup using options</h3>
+            <div class="ab-carousel" data-slide_speed="2000" id="slider-2">
+                <div class="ab-carousel-container">
+                    <section>Slide 1</section>
+                    <section>Slide 2</section>
+                    <section>Slide 3</section>
+                </div>
+            </div>
+        </div>
+        <script type="module">
+            import { ABCarousel } from '../dist/ab-carousel.es.js';
+            const slider = document.querySelector( '#slider-1' );
+
+            new ABCarousel( slider );
+            new ABCarousel( '#slider-2', { slide_speed: 1500, transition: 'ABTransitionSlide' } );
+        </script>
+    </body>
+</html>

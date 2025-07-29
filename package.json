@@ -18,7 +18,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:ui": "vitest --ui",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "serve:examples": "vite examples"
   },
   "homepage": "https://github.com/bedoya/ab-carousel#readme",
   "repository": {

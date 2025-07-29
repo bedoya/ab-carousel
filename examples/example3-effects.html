@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ABCarousel Demo</title>
+        <link rel="stylesheet" href="../dist/ab-carousel.css">
+        <link rel="stylesheet" href="./css/examples-styles.css">
+    </head>
+    <body>
+        <div style="margin: 20px auto;">
+            <h2 style="margin-bottom: 10px; font-family: 'Open Sans', sans-serif; text-align: center; width: 100%;">
+                Using effects in slide elements
+            </h2>
+        </div>
+
+        <div style="width: 600px; margin: 20px auto;">
+            <div class="ab-carousel" data-slide_speed="6000" id="slider">
+                <div class="ab-carousel-container">
+                    <div>
+                        <img alt="Example picture"
+                             src="https://picsum.photos/id/1084/450/300?grayscale"
+                             class="ab-carousel-slide-background"
+                             data-zoom_start="1"
+                             data-zoom_final="1.2"
+                             data-pan_amount="20%"
+                             data-pan_direction="45"
+                             data-effect="ABEffectKenBurns"
+                        />
+                        <span>Slide 1 - Ken Burns background image</span>
+                    </div>
+                    <div>
+                        <span style="display: block; color: rgba( 255, 255, 255, 1 )">Slide 2 - Text enters bouncing in</span>
+                        <span style="display: inline-block;
+                                     top: 100px;
+                                     left: 400px;
+                                     position: absolute;
+                                     font-weight: bold;
+                                     color: rgba( 168, 0, 168, 1 );
+                                     font-size: 1.5rem;"
+                              data-effect="ABEffectBounceIn"
+                              data-duration="2000"
+                              data-direction="true"
+                              data-gravity="true"
+                              data-wait="400"
+                        >
+                            Bouncing text
+                        </span>
+                    </div>
+                    <div>
+                        <span style="display: block">Slide 3 - Pulsating glow effect</span>
+                        <span style="display: inline-block;
+                                     position: absolute;
+                                     top: 40%;
+                                     left: 50%;
+                                     transform: translate(-50%, -50%);
+                                     font-size: 4.2rem;
+                                     color: #fff;
+                                     padding: 0.4em;
+                                     border: 0.2rem solid #fff;
+                                     border-radius: 2rem;"
+                              data-effect="ABEffectPulsatingGlow"
+                              data-box-glow-color="188, 19, 254"
+                              data-font-glow-color="0, 0, 255"
+                              data-duration="1500"
+                        >
+                            Glow!!!
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="module">
+            import { ABCarousel } from '../dist/ab-carousel.es.js';
+            const slider = document.querySelector( '#slider' );
+
+            const carousel = new ABCarousel( slider, {
+                slide_speed: 6000,
+                transition: { name: 'ABTransitionSlide', duration: 800, direction: false },
+            } );
+        </script>
+    </body>
+</html>
