@@ -51,18 +51,18 @@ export class ABPluginNavigationArrows extends ABCarouselPlugin {
      * @param {ABCarousel} carousel The carousel instance.
      */
     private addNextButtonToElement( container: HTMLDivElement, carousel: ABCarousel ) {
-        const nextBtn = document.createElement( 'button' );
-        nextBtn.classList.add( 'ab-carousel-next' );
-        nextBtn.setAttribute( 'aria-label', 'Next slide' );
-        nextBtn.innerHTML = this.getArrow();
+        const nextButton = document.createElement( 'button' );
+        nextButton.classList.add( 'ab-carousel-next' );
+        nextButton.setAttribute( 'aria-label', 'Next slide' );
+        nextButton.innerHTML = this.getArrow();
 
-        nextBtn.addEventListener( 'click', async ( e ) => {
+        nextButton.addEventListener( 'click', async ( e ) => {
             e.preventDefault();
             await carousel.getSlider().advance();
             carousel.play();
         } );
 
-        container.appendChild( nextBtn );
+        container.appendChild( nextButton );
     }
 
     /**
@@ -72,18 +72,18 @@ export class ABPluginNavigationArrows extends ABCarouselPlugin {
      * @param {ABCarousel} carousel The carousel instance.
      */
     private addPrevButtonToElement( container: HTMLDivElement, carousel: ABCarousel ) {
-        const prevBtn = document.createElement( 'button' );
-        prevBtn.classList.add( 'ab-carousel-prev' );
-        prevBtn.setAttribute( 'aria-label', 'Previous slide' );
-        prevBtn.innerHTML = this.getArrow();
+        const prevButton = document.createElement( 'button' );
+        prevButton.classList.add( 'ab-carousel-prev' );
+        prevButton.setAttribute( 'aria-label', 'Previous slide' );
+        prevButton.innerHTML = this.getArrow();
 
-        prevBtn.addEventListener( 'click', async  ( e ) => {
+        prevButton.addEventListener( 'click', async  ( e ) => {
             e.preventDefault();
             await carousel.getSlider().advance( -1 );
             carousel.play();
         } );
 
-        container.appendChild( prevBtn );
+        container.appendChild( prevButton );
     }
 
     /**

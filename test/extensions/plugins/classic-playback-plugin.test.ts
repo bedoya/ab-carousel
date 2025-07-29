@@ -11,11 +11,6 @@ describe( 'ABPluginClassicPlayback', () => {
     beforeEach( async () => {
         container = buildCarouselFixture( 4, 'slider' );
 
-        document.body.appendChild( container );
-        carousel = new ABCarousel( container, {
-            plugins: { markers: 'dots' }
-        } );
-
         carousel = new ABCarousel( container, {
             plugins: { playback: 'classic' }
         } );
