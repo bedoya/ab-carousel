@@ -5,11 +5,18 @@
 ### Added
 
 - `ABPluginDotMarkers` plugin with clickable dots and active slide sync.
+- `contained` property to `ABCarouselPlugin` to control whether a plugin renders inside `.ab-carousel-plugins` container or directly in the main carousel container.
+- New plugin type `'navigation'` in `PluginType` union (in `ABExtensionsTypes.ts`) to support navigation-related plugins like arrows.
+- New `ABPluginNavigationArrows` plugin with navigation arrows.
+- Default registration of `ABPluginNavigationArrows` in `registry.ts`.
+- Styles for navigation arrows in `ab-plugin-arrows.css`.
+- Updated `example4-plugins.html` to demonstrate navigation arrows.
 
 ### Changed
 
 - Improved test structure: separated into `public-api`, `instantiation`, and `behavior` directories.
 - Refactored internal slide activation logic for better testability.
+- `getPluginContainer()` now checks the `contained` flag to determine the appropriate container for rendering plugins.
 
 ### Tests
 
