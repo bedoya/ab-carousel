@@ -1,4 +1,4 @@
-import type { ABCarousel } from '@/core/ABCarousel';
+import { ABCarousel } from '@/core/ABCarousel';
 import { PluginType } from '@/types';
 import { ABCarouselPlugin } from '@/core/ABCarouselPlugin';
 import '@plugins/markers/ab-plugin-dots.css';
