@@ -1,0 +1,38 @@
+.ab-carousel-navigation {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY( -50% );
+    pointer-events: none;
+}
+
+.ab-carousel-prev,
+.ab-carousel-next {
+    position: absolute;
+    background: rgba( 0, 0, 0, 0.4 );
+    color: white;
+    border: none;
+    font-size: 2rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    pointer-events: all;
+    transition: background 0.3s ease;
+}
+
+.ab-carousel-prev {
+    left: 0;
+}
+
+.ab-carousel-next {
+    left: 100%;
+    transform: translateX( -100% ) rotate( 180deg );
+}
+
+.ab-carousel-prev:hover,
+.ab-carousel-next:hover {
+    background: rgba( 0, 0, 0, 0.6 );
+}

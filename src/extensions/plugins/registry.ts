@@ -2,6 +2,7 @@ import type { ABCarouselPlugin } from '@/core/ABCarouselPlugin';
 import { PluginType } from '@/types';
 import { ABPluginClassicPlayback } from '@plugins/playback/ABPluginClassicPlayback.ts';
 import { ABPluginDotMarkers } from '@plugins/markers/ABPluginDotMarkers';
+import { ABPluginNavigationArrows } from '@plugins/navigation/ABPluginNavigationArrows';
 
 type PluginConstructor = new () => ABCarouselPlugin;
 
@@ -12,6 +13,9 @@ const pluginRegistry: Record<PluginType, Record<string, PluginConstructor>> = {
     markers: {
         dots: ABPluginDotMarkers,
     },
+    navigation: {
+        arrows: ABPluginNavigationArrows,
+    }
 };
 
 /** Register one plugin class */
