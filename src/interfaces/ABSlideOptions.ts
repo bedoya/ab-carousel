@@ -1,4 +1,4 @@
-import type { ABCarouselTransition } from '@/core/ABCarouselTransition';
+import { ABTransitionOptions } from '@/interfaces';
 
 /**
  * Configuration options for a slide.
@@ -6,12 +6,22 @@ import type { ABCarouselTransition } from '@/core/ABCarouselTransition';
  */
 export interface ABSlideOptions {
     /**
+     * Override slide_speed
+     */
+    slideDuration?: number;
+
+    /**
+     * Additional css classes added to the <div class="ab-carousel-slide">
+     */
+    slideClass?: string;
+
+    /**
      * Transition effect to apply when the slide becomes visible.
      */
-    transitionIn: ABCarouselTransition;
+    transitionIn?: Partial<ABTransitionOptions>;
 
     /**
      * Transition effect to apply when the slide is hidden.
      */
-    transitionOut: ABCarouselTransition;
+    transitionOut?: Partial<ABTransitionOptions>;
 }

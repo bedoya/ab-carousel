@@ -1,7 +1,10 @@
-import { ABNoTransition } from '@/plugins/transitions/ABNoTransition';
-import type { ABSlideOptions } from '@/interfaces/interfaces';
+import type { ABSlideOptions } from '@/interfaces';
+import { defaultCarouselOptions } from '@/defaults/carousel';
+import { defaultTransitionInOptions, defaultTransitionOutOptions } from '@/defaults/transitions';
 
 export const defaultSlideOptions: ABSlideOptions = {
-    transitionIn: new ABNoTransition(),
-    transitionOut: new ABNoTransition(),
+    slideDuration: defaultCarouselOptions.slide_speed,
+    slideClass: '',
+    transitionIn: defaultTransitionInOptions,
+    transitionOut: defaultTransitionOutOptions,
 };

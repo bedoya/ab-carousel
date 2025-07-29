@@ -2,29 +2,30 @@
     position: relative;
     width: 100%;
     height: 100%;
-    /* overflow: hidden; */
+    display: flex;
+    flex-direction: column;
 }
 
 .ab-carousel-container {
+    flex: 1;
+    box-sizing: border-box;
     position: relative;
-    width: 100%;
-    height: 100%;
+    overflow: hidden;
 }
 
 .ab-carousel-slide {
+    box-sizing: border-box;
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
     pointer-events: none;
     z-index: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
 }
 
 .ab-carousel-slide.active {
-    opacity: 1;
     pointer-events: all;
     z-index: 1;
 }
@@ -41,5 +42,15 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 1;
+}
+
+.ab-carousel-plugins {
+    position: absolute;
+    bottom: 0;
+    height: 2.5rem;
+    width: 100%;
+    background-color: rgba(0, 0, 32, 0.25);
+    pointer-events: none;
     z-index: 1;
 }

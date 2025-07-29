@@ -1,25 +1,58 @@
 import { ABSlider } from '@/core/ABSlider.js';
 import { ABSlide } from '@/core/ABSlide';
-import { ABCarouselPlugin } from '@/core/ABCarouselPlugin';
-import { ABCarouselOptions } from '@/interfaces/interfaces';
-import { emitCustomEvent, resolveOptionsWithDataAttributes } from '@/support/utils';
+import type { ABCarouselPlugin } from '@/core/ABCarouselPlugin';
+import { ABCarouselOptions, ABSliderOptions } from '@/interfaces';
 import { VisibilityController } from '@/support/VisibilityController';
-import { ABNoTransition } from '@/plugins/transitions/ABNoTransition';
-
-import defaultCarouselOptions from '@/defaults/carousel';
+import { SliderOptionsResolver } from '@support/SliderOptionsResolver';
+import { CarouselOptionsResolver } from '@support/CarouselOptionsResolver';
+import { PluginType } from '@/types';
+import { resolvePlugin } from '@/extensions/plugins/registry';
 import '@/styles/ab-carousel.css';
 
+/**
+ * Main class responsible for initializing and managing the carousel behavior.
+ *
+ * Handles slide transitions, autoplay logic, visibility-based playback,
+ * plugin integration, and configuration resolution from various sources.
+ *
+ * Usage:
+ * ```js
+ * const carousel = new ABCarousel('#slider', { slide_speed: 6000 });
+ * ```
+ */
 export class ABCarousel {
 
+    /** The root DOM element passed during instantiation (either selector or HTMLElement). */
     private readonly element: HTMLElement;
-    private slider: ABSlider;
-    public options: ABCarouselOptions;
-    private interval: ReturnType<typeof setInterval> | null = null;
-    private visibilityController: VisibilityController;
-    private is_playing: boolean = false;
-    private plugins: ABCarouselPlugin[] = [];
-    private is_transitioning = false;
 
+    /** Internal ABSlider instance responsible for managing slides. */
+    private readonly slider: ABSlider;
+
+    /** Final resolved configuration options for the carousel. */
+    public options: ABCarouselOptions;
+
+    /** Reference to the autoplay interval. `null` when not playing. */
+    private interval: ReturnType<typeof setInterval> | null = null;
+
+    /** Controls autoplay based on visibility and focus changes. */
+    private visibilityController: VisibilityController;
+
+    /** Indicates whether the carousel is currently autoplaying. */
+    private is_playing: boolean = false;
+
+    /** Promise that resolves when the carousel is fully initialized and ready. */
+    public ready: Promise<void>
+
+    /** Loaded plugin instances applied to the carousel. */
+    private plugins: ABCarouselPlugin[] = [];
+
+    /** Internal resolver function for the `ready` promise. */
+    private resolveReady!: ( value?: void | PromiseLike<void> ) => void;
+
+    /** Holds available resolver classes used for parsing options. */
+    private resolvers = {
+        slider: SliderOptionsResolver,
+    };
 
     /**
      * Initializes the ABCarousel instance.
@@ -29,26 +62,36 @@ export class ABCarousel {
      *
      * @throws Error if the element or required internal container is not found.
      */
-    constructor( elem: string | HTMLElement, options: ABCarouselOptions = {} ) {
+    constructor( elem: string | HTMLElement, options: Partial<ABCarouselOptions> = {} ) {
         try {
             this.element = this.resolveHtmlElement( elem );
-            this.options = resolveOptionsWithDataAttributes<ABCarouselOptions>(
-                this.element,
-                options,
-                defaultCarouselOptions
-            );
-            this.slider = this.createSlider( this.element.querySelector( '.ab-carousel-container' ) );
+            this.options = CarouselOptionsResolver.resolve( this.element, options );
+            this.slider = this.createSlider();
             this.visibilityController = new VisibilityController( this, this.element );
-            emitCustomEvent( this.element, 'ab-carousel-transition', { speed: this.getOption( 'slide_speed' ) } );
+            this.resolvePlugins( options.plugins );
         }
         catch ( e ) {
             throw new Error( `[ABCarousel] ${ e instanceof Error ? e.message : 'Unknown error' }` );
         }
 
-        if ( this.isActive() ) {
-            this.slider.getSlide( this.slider.getIndex() ).show();
-            this.play();
-        }
+        this.ready = new Promise( resolve => {
+            this.resolveReady = resolve
+        } );
+
+        this.startSlider();
+    }
+
+    /**
+     * Initializes the first visible slide by explicitly showing it
+     * and triggering any effects associated with the `onVisible` timing.
+     * This is called only once during carousel construction.
+     *
+     * @returns {Promise<void>} Resolves once the initial slide and its effects are fully applied.
+     */
+    private async initFirstSlide(): Promise<void> {
+        const firstSlide: ABSlide = this.getSlide( this.getVisibleSlideIndex() );
+        firstSlide.show();
+        await firstSlide.afterTransition();
     }
 
     /**
@@ -76,43 +119,107 @@ export class ABCarousel {
     }
 
     /**
-     * Creates an ABSlider instance from a container element.
+     * Resolves the final configuration options for the internal slider.
+     * Merges attributes, dataset values, and defaults into a structured
+     * `ABSliderOptions` object used by the `ABSlider` instance.
      *
-     * @param {Element | null} container The element with class .ab-carousel-container.
+     * @returns {ABSliderOptions} The normalized slider options.
+     */
+    private resolveSliderOptions(): ABSliderOptions {
+        return this.resolvers.slider.resolve( this.options );
+    }
+
+    /**
+     * Resolves and applies carousel plugins based on the provided configuration.
+     *
+     * This method looks up each plugin by type and key, instantiates it, stores
+     * the instance, and applies its behavior to the current carousel.
+     *
+     * @param {Partial<Record<PluginType, string>>} plugins An optional map of plugin types to plugin keys.
+     */
+    private resolvePlugins( plugins?: Partial<Record<PluginType, string>> ): void {
+        if ( plugins === undefined ) {
+            return;
+        }
+
+        for ( const [ type, key ] of Object.entries( plugins ) as [ PluginType, string ][] ) {
+            const pluginClass = resolvePlugin( type, key );
+            if ( pluginClass ) {
+                this.plugins.push( new pluginClass() );
+            }
+        }
+
+        this.plugins.forEach( plugin => plugin.apply( this ) );
+    }
+
+    /**
+     * Creates an ABSlider instance from a container element.
      *
      * @returns {ABSlider} instance.
      * @throws Error if the container is invalid.
      */
-    private createSlider( container: Element | null ): ABSlider {
+    private createSlider(): ABSlider {
+        const resolvedOptions = this.resolveSliderOptions();
+        const container = this.element.querySelector( '.ab-carousel-container' );
         if ( !( container instanceof HTMLElement ) ) {
             throw new Error( 'Missing .ab-carousel-container element' );
         }
 
-        return new ABSlider( container, this.getOption( 'slide_index' ) ?? 0 );
+        return new ABSlider( container, resolvedOptions );
+    }
+
+    /**
+     * Starts the slider if it is active
+     *
+     * @private
+     */
+    private startSlider() {
+        if ( this.isActive() ) {
+            this.initFirstSlide().then( () => {
+                queueMicrotask( () => {
+                    this.play();
+                    this.resolveReady();
+                } );
+            } );
+        }
+        else {
+            this.resolveReady();
+        }
+
+    }
+
+    /**
+     * Resets the time interval of the slider
+     */
+    private resetInterval() {
+        if ( this.interval !== null ) {
+            clearInterval( this.interval );
+            this.interval = null;
+        }
     }
 
     /**
      * Starts the automatic slide rotation.
      *
-     * @param {number} delta Number of slides to advance each interval (default is 1).
      * @param {boolean} update_configuration Indicates if it should change de option if the change was triggered
      */
-    public play( delta: number = 1, update_configuration: boolean = false ) {
-        if ( this.interval !== null ) {
-            return;
-        }
-
-        this.interval = setInterval( () => {
-            void this.advanceIfPlaying( delta );
-        }, this.getOption( 'slide_speed' ) as number );
+    public play( update_configuration: boolean = false ) {
+        this.resetInterval();
         if ( update_configuration ) {
             this.updateOption( 'is_active', true );
         }
-        this.is_playing = true;
+        if ( this.getOption( 'is_active' ) === true ) {
+            this.interval = setInterval( () => {
+                void this.slider.advance();
+            }, this.getOption( 'slide_speed' ) as number );
+            this.is_playing = true;
+        }
     }
 
     /**
      * Stops the automatic slide rotation.
+     *
+     * @param {boolean} update_configuration Flag to detect user fired action
      */
     public pause( update_configuration: boolean = false ) {
         if ( update_configuration ) {
@@ -122,61 +229,6 @@ export class ABCarousel {
         this.element.dispatchEvent( new CustomEvent( 'ab-carousel-pause' ) );
         this.resetInterval();
         this.is_playing = false;
-    }
-
-    /**
-     * Advances the carousel by a given number of slides.
-     * It hides the current slide, updates the index, and shows the new slide.
-     * If the carousel is not currently playing, the transition is skipped.
-     *
-     * @param {number} delta Number of slides to move (can be negative).
-     */
-    public async advanceSlide( delta: number = 1 ): Promise<void> {
-        const current = this.slider.getSlide( this.slider.getIndex() );
-        const next = this.slider.getSlide( this.slider.getNextIndex( delta ) );
-
-        try {
-            await this.startTransition( current, next );
-        }
-        catch ( e ) {
-            // Handle gracefully
-        }
-
-        emitCustomEvent( this.element, 'ab-carousel-transition', {
-            speed: this.getOption( 'slide_speed' ),
-        } );
-    }
-
-    /**
-     * Performs the transition between the current and next slide.
-     * Each slide can define its own transitionOut and transitionIn effects.
-     * If not defined, a default transition is used.
-     *
-     * @param {ABSlide} current The slide that is currently visible.
-     * @param {ABSlide} next The slide that will become visible.
-     * @private
-     */
-    private async startTransition( current: ABSlide, next: ABSlide ): Promise<void> {
-        const transitionOut = current.transitionOut || this.getDefaultTransition();
-        const transitionIn = next.transitionIn || this.getDefaultTransition();
-
-        await transitionOut.apply( current, next );
-        await transitionIn.apply( current, next );
-    }
-
-    /**
-     * Advances the carousel by one (or more) slides, only if currently playing.
-     *
-     * @param {number} delta Number of slides to move (can be negative).
-     * @private
-     */
-    private async advanceIfPlaying( delta: number = 1 ): Promise<void> {
-        if ( this.isPlaying() && !this.is_transitioning ) {
-            this.is_transitioning = true;
-            await this.advanceSlide( delta );
-            this.slider.advanceIndex( delta );
-            this.is_transitioning = false;
-        }
     }
 
     /**
@@ -192,22 +244,26 @@ export class ABCarousel {
     }
 
     /**
-     * Returns the default transition effect of the slider
-     *
-     * @returns {ABNoTransition}
-     * @private
-     */
-    private getDefaultTransition(): ABNoTransition {
-        return new ABNoTransition();
-    }
-
-    /**
      * Returns the number of slides in the carousel.
      *
      * @returns Number of slides.
      */
-    public getSlideCount(): number {
-        return this.slider.getSlideCount();
+    public getSlidesCount(): number {
+        return this.slider.getSlidesCount();
+    }
+
+    /**
+     * Returns the slide in the index position
+     *
+     * @param {number} index
+     *
+     * @returns {ABSlide}
+     */
+    public getSlide( index: number ): ABSlide {
+        if ( index >= 0 && index < this.getSlidesCount() ) {
+            return this.slider.getSlide( index );
+        }
+        throw new Error( `Slide index ${ index } is out of bounds` );
     }
 
     /**
@@ -216,7 +272,7 @@ export class ABCarousel {
      * @returns {number}
      */
     public getVisibleSlide(): ABSlide {
-        return this.slider.getSlide( this.slider.getIndex() );
+        return this.getSlide( this.getVisibleSlideIndex() );
     }
 
     /**
@@ -240,12 +296,30 @@ export class ABCarousel {
     }
 
     /**
+     * Returns the root carousel container element.
+     *
+     * @returns {HTMLElement} The main DOM element wrapping the carousel.
+     */
+    public getContainer(): HTMLElement {
+        return this.element;
+    }
+
+    /**
+     * Returns the carousel's slider
+     *
+     * @returns {ABSlider}
+     */
+    public getSlider(): ABSlider {
+        return this.slider;
+    }
+
+    /**
      * Returns whether the carousel is currently paused.
      *
      * @returns {boolean}
      */
-    public isPaused() {
-        return !this.isPlaying() && ( this.interval === null );
+    public isPaused(): boolean {
+        return !this.isPlaying();
     }
 
     /**
@@ -254,7 +328,7 @@ export class ABCarousel {
      * @returns {boolean}
      */
     public isPlaying(): boolean {
-        return this.interval !== null;
+        return ( this.interval !== null );
     }
 
     /**
@@ -267,13 +341,11 @@ export class ABCarousel {
     }
 
     /**
-     * Resets the time interval of the slider
+     * Determines if the carousel is visible
+     *
+     * @returns {boolean}
      */
-    private resetInterval() {
-        if ( this.interval !== null ) {
-            clearInterval( this.interval );
-            this.interval = null;
-            this.is_playing = false;
-        }
+    public isVisible(): boolean {
+        return this.visibilityController.isVisible();
     }
 }

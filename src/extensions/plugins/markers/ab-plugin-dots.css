@@ -1,0 +1,29 @@
+.ab-carousel-dots {
+    position: absolute;
+    left: 50%;
+    transform: translateX( -50% );
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 0.5rem;
+    pointer-events: auto;
+}
+
+.ab-carousel-dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: rgba(32, 32, 32, 1);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.ab-carousel-dot.active {
+    background-color: rgba( 255, 255, 255, 1 );
+}
+
+.ab-carousel-dot:hover {
+    background-color: rgba( 255, 255, 255, 0.8 );
+    box-shadow: 0 0 0 2px rgba( 255, 255, 255, 1 );
+}

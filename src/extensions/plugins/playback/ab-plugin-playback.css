@@ -1,0 +1,29 @@
+.ab-carousel-playback {
+    position: absolute;
+    right: 0.5rem;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 0.5rem;
+    pointer-events: auto;
+}
+
+.ab-carousel-playback a {
+    position: relative;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.2rem;
+    text-decoration: none;
+    color: rgba( 0, 0, 32, 1 );
+    background-color: rgba( 255, 255, 255, 1 );
+    transition: background .2s, border-color .2s;
+    margin-right: 4px;
+}
+
+.ab-carousel-playback a:hover {
+    background: #c3c3c3;
+}

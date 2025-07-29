@@ -13,7 +13,21 @@
     "moduleResolution": "Bundler",
     "noEmit": true,
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ],
+      "@transitions/*": [
+        "src/extensions/transitions/*"
+      ],
+      "@effects/*": [
+        "src/extensions/effects/*"
+      ],
+      "@plugins/*": [
+        "src/extensions/plugins/*"
+      ],
+      "@support/*": [
+        "src/support/*"
+      ]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
