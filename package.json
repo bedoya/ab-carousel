@@ -1,7 +1,7 @@
 {
   "name": "ab-carousel",
   "version": "1.1.0",
-  "description": "A lightweight, extensible, and animation-ready JavaScript carousel with multiple plugins",
+  "description": "A lightweight, extensible, and animation-ready JavaScript carousel with multiple plugins.",
   "main": "dist/ab-carousel.cjs.js",
   "module": "dist/ab-carousel.es.js",
   "exports": {
